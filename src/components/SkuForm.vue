@@ -1,5 +1,17 @@
 <template>
     <div class="sku-container">
+        <div v-if="sourceAttribute.length < maxSpecs">
+            <el-select v-model="sku_spec_index" placeholder="请选择类别">
+                <el-option
+                    v-for="(sku_type,sku_type_index) in specTypes"
+                    :key="sku_type_index"
+                    :label="sku_type.name"
+                    :disabled="sku_type.disabled"
+                    :value="sku_type_index"
+                />
+            </el-select>
+            <el-button icon="el-icon-plus" @click="addAttr">添加</el-button>
+        </div>
         <div v-if="!disabled" class="sku-check">
             <div v-if="theme == 1" class="theme-1">
                 <el-card v-for="(item, index) in myAttribute" :key="index" class="item" shadow="never">
@@ -75,6 +87,27 @@
 export default {
     name: 'SkuForm',
     props: {
+        /**
+         * 规格类型
+         * specTypes: [
+         *  { id: 1, name: '尺寸' },
+         *  { id: 2, name: '型号' },
+         *  { id: 3, name: '款式' },
+         *  { id: 4, name: '器型' },
+         *  ...
+         * ]
+         */
+        specTypes: {
+            type: Array,
+            default: () => []
+        },
+        /**
+         * 规格最大数量
+         */
+        maxSpecs: {
+            type: Number,
+            default: 2
+        },
         /**
          * 原始规格数据
          * sourceAttribute: [
@@ -153,7 +186,8 @@ export default {
             form: {
                 skuData: []
             },
-            batch: {}
+            batch: {},
+            sku_spec_index: null
         }
     },
     computed: {
@@ -263,6 +297,18 @@ export default {
         !this.async && this.init()
     },
     methods: {
+        addAttr() {
+            let sku_spec_index = this.sku_spec_index
+            if (sku_spec_index) {
+                let spec_type = this.specTypes[sku_spec_index]
+                this.myAttribute.push({
+                    name: spec_type.name,
+                    canAddAttribute: true,
+                    addAttribute: '',
+                    item: []
+                })
+            }
+        },
         init() {
             this.$nextTick(() => {
                 this.isInit = true
@@ -322,8 +368,8 @@ export default {
                 }, 0)
             })
         },
-        onRemoveItem(index){
-            this.myAttribute.splice(index,1)
+        onRemoveItem(index) {
+            this.myAttribute.splice(index, 1)
         },
         // 根据 attribute 进行排列组合，生成 skuData 数据
         combinationAttribute(index = 0, dataTemp = []) {

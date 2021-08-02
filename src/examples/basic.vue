@@ -1,6 +1,8 @@
 <template>
     <div>
         <SkuForm
+            :spec-types="specTypes"
+            :max-specs="4"
             :source-attribute="sourceAttribute"
             :attribute.sync="attribute"
             :sku.sync="sku"
@@ -33,7 +35,33 @@ export default {
                 }
             ],
             attribute: [],
-            sku: []
+            sku: [],
+            specTypes: [
+                {
+                    id: 1,
+                    name: '尺寸'
+                },
+                {
+                    id: 2,
+                    name: '型号'
+                },
+                {
+                    id: 3,
+                    name: '款式'
+                },
+                {
+                    id: 4,
+                    name: '器型'
+                },
+                {
+                    id: 5,
+                    name: '材质'
+                },
+                {
+                    id: 6,
+                    name: '口味'
+                }
+            ]
         }
     }
 }
