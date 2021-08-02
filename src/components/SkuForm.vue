@@ -299,7 +299,7 @@ export default {
     methods: {
         addAttr() {
             let sku_spec_index = this.sku_spec_index
-            if (sku_spec_index) {
+            if (sku_spec_index !== null) {
                 let spec_type = this.specTypes[sku_spec_index]
                 this.myAttribute.push({
                     name: spec_type.name,
