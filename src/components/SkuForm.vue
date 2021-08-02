@@ -3,7 +3,10 @@
         <div v-if="!disabled" class="sku-check">
             <div v-if="theme == 1" class="theme-1">
                 <el-card v-for="(item, index) in myAttribute" :key="index" class="item" shadow="never">
-                    <div slot="header">{{ item.name }}</div>
+                    <div slot="header">
+                        <span>{{ item.name }}</span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="onRemoveItem(index)">移除</el-button>
+                    </div>
                     <el-checkbox v-for="(item2, index2) in item.item" :key="index2" v-model="item2.checked" :label="item2.name" size="small" />
                     <el-input v-if="item.canAddAttribute" v-model="item.addAttribute" size="small" placeholder="新增一个规格" class="add-attr" @keyup.enter.native="onAddAttribute(index)">
                         <el-button slot="append" size="small" icon="el-icon-plus" @click="onAddAttribute(index)">添加</el-button>
@@ -318,6 +321,9 @@ export default {
                     this.isInit = false
                 }, 0)
             })
+        },
+        onRemoveItem(index){
+            this.myAttribute.splice(index,1)
         },
         // 根据 attribute 进行排列组合，生成 skuData 数据
         combinationAttribute(index = 0, dataTemp = []) {
