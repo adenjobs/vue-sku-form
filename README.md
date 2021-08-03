@@ -1,4 +1,4 @@
-# vue-sku-form
+# sku-form
 
 Fork from [hooray/vue-sku-form](https://github.com/hooray/vue-sku-form)
 

@@ -111,9 +111,9 @@ export default {
         /**
          * 原始规格数据
          * sourceAttribute: [
-         *   { name: '颜色', item: ['黑', '金', '白'] },
-         *   { name: '内存', item: ['16G', '32G'] },
-         *   { name: '运营商', item: ['电信', '移动', '联通'] }
+         *   { id:1,name: '颜色', item: ['黑', '金', '白'] },
+         *   { id:2,name: '内存', item: ['16G', '32G'] },
+         *   { id:3,name: '运营商', item: ['电信', '移动', '联通'] }
          * ]
          */
         sourceAttribute: {
@@ -225,6 +225,7 @@ export default {
             let attribute = []
             this.myAttribute.forEach(v1 => {
                 const obj = {
+                    id: v1.id,
                     name: v1.name,
                     item: []
                 }
@@ -302,6 +303,7 @@ export default {
             if (sku_spec_index !== null) {
                 let spec_type = this.specTypes[sku_spec_index]
                 this.myAttribute.push({
+                    id: spec_type.id,
                     name: spec_type.name,
                     canAddAttribute: true,
                     addAttribute: '',
@@ -317,6 +319,7 @@ export default {
                 // 根据 sourceAttribute 复原 myAttribute 的结构
                 this.sourceAttribute.forEach(v => {
                     const temp = {
+                        id: v.id,
                         name: v.name,
                         canAddAttribute: typeof v.canAddAttribute != 'undefined' ?  v.canAddAttribute : true,
                         addAttribute: '',
